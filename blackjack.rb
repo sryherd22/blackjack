@@ -110,7 +110,7 @@ until (play_again.capitalize == "No") do
         player1_card3 = deck.pop
         say "Your next card is #{player1_card3}"
         else 
-        say "Ok, your hand is Set"
+        say "The total in your hand is , Let's she what the dealer has got"
       end
   end
 

@@ -2,24 +2,24 @@ def say(msg)
   puts "-->  #{msg}"
 end
 
-def say_to_player1(player1_name, msg)
-  puts "--> #{player1_name}, #{msg}"
+def say_to_player1(p1name,msg)
+  puts "-->  #{p1name.capitalize}, #{msg}"
 end
 
-#Greating the player and getting their name
+# Greating the player and getting their name
 
 say "Welcome to Sonya's Blackjack Game!"
 say " "
 say "What is your name?"
 player1_name = gets.chomp
-say_to_player1 "Let's Play Some BlackJack!"
+say "Let's Plays Some Blackjack!"
 
 play_again = "Yes"
 
 #Setting up the array of cards and Shuffling
 
-deck = [ 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K", "A", "A", "A", "A"]
-#deck = [ "A", "A", "A", "A", "A", 2, 3, 5, "J"]
+#deck = [ 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K", "A", "A", "A", "A"]
+deck = [ "A", "A", "A", "A", "A", 2, 3, 5, "J", 10, 10 ]
 deck.shuffle!
 
 until (play_again.capitalize == "No") do
@@ -27,16 +27,16 @@ until (play_again.capitalize == "No") do
   say "***** DEALING CARDS *********"
   say " "
   
-  #dealing the cards
+  # Dealing the cards
 
   player1_card1 = deck.pop
   dealer_card1 = deck.pop
   player1_card2 = deck.pop
   dealer_card2 = deck.pop
 
-  #displaying the cards to the player
+  # Displaying the cards to the player
 
-  say "#{player1_name.capitalize}, You have been delt a #{player1_card1} and a #{player1_card2}."
+  say_to_player1(player1_name, "You have been delt a #{player1_card1} and a #{player1_card2}.")
   say " "
   say "The dealer has been delt one card down that you cannot see and a #{dealer_card2}."
   say " "
@@ -68,7 +68,6 @@ until (play_again.capitalize == "No") do
 # Calculate the total value of the players hand after the deal
 
   if ((player1_card1_value2 == 0) and (player1_card2_value2 == 0))
-      say "The value of your first card is #{player1_card1_value1} and the value of your second card is #{player1_card2_value1}."
       player1_hand_value1 = (player1_card1_value1 + player1_card2_value1)
       say "The total value in your hand is #{player1_hand_value1}"
     elsif ((player1_card1_value2 >= 0) and (player1_card2_value2 == 0))
@@ -90,21 +89,40 @@ until (play_again.capitalize == "No") do
       say "The total in your hand can be 2, 12, or 22"
   end
 
-  # Ask if the Player would like a Hit?
+  # Check to See if the player Hit BlackJack
 
-  say "#{player1_name.capitalize}, would you like a hit?"
+  arr_p1_hand_value = [player1_hand_value1, player1_hand_value2, player1_hand_value3, player1_hand_value4]
+  if arr_p1_hand_value.include? 21
+    say " "
+    say "*** Congradulations, You hit a BlackJack! You Win!! ****"
+    say " "
+    else
+      # Ask if the Player would like a Hit?
+      say_to_player1(player1_name,"would you like a hit? Please enter Yes or No")
+      player1_hit = gets.chomp
 
+      until ([ "Yes", "No" ].include? player1_hit.capitalize) do
+        say_to_player1(player1_name,"Please type Yes or No.")
+        player1_hit = gets.chomp
+      end
 
+      if player1_hit.capitalize == "Yes"
+        player1_card3 = deck.pop
+        say "Your next card is #{player1_card3}"
+        else 
+        say "Ok, your hand is Set"
+      end
+  end
 
-
+  
   # See if the player would like to play again
 
-  say "Would You like to play Again? Please type yes or no."
+  say_to_player1(player1_name,"Would You like to play Again? Please type yes or no.")
   play_again = gets.chomp
 
     until ([ "Yes", "No" ].include? play_again.capitalize) do
-      say "Please type Yes or No."
+      say_to_player1(player1_name,"Please type Yes or No.")
       play_again = gets.chomp
     end
-  puts deck
+  # puts deck
 end

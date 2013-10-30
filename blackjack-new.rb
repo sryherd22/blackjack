@@ -5,8 +5,28 @@ def say(msg)
   puts "--> "
 end
 
+def say_emp(msg)
+  puts "-->"
+  puts "--> ********* #{msg.upcase} *********"
+  puts "-->"
+end
+
 def say_to_player1(p1name,msg)
   puts "-->  #{p1name.capitalize}, #{msg}"
+  puts "-->"
+end
+
+def say_win
+  say_emp "Congradulations! You Win!!!"
+end
+
+def say_lose
+  say_emp "You lost!"
+  say "Game Over... Better Luck Next Time"
+end
+
+def sleep_time
+  sleep(2)
 end
 
 # Defining Method to Calculate the Total of a Hand
@@ -52,7 +72,7 @@ end
 # Greating the player and getting their name
 
 puts " "
-say "Welcome to Sonya's Blackjack Game!"
+say_emp "Welcome to Sonya's Blackjack Game!"
 say "What is your name?"
 player1_name = gets.chomp
 say "Hi #{player1_name.capitalize}, Let's Plays Some Blackjack!"
@@ -69,7 +89,8 @@ deck.shuffle!
 play_again = "Yes"
 
 until (play_again.capitalize == "No") do
-  say "***** DEALING CARDS *********"
+  say_emp "Dealing Cards"
+  sleep_time
   
   # Dealing the cards
 
@@ -97,16 +118,18 @@ until (play_again.capitalize == "No") do
   # Displaying the cards to the player
 
   say_to_player1(player1_name,"You have been delte the following cards: #{player1_cards[0]} and #{player1_cards[1]}")
-  say "Your Current Total: #{player1_total}."
+  say "YOUR CURRENT TOTAL: #{player1_total}"
+  sleep_time
   say "The dealer has been delt one HIDDEN card and a #{dealer_cards[1]}."
+  sleep_time
 
   # Check to See if the player Hit BlackJack
 
   if player1_total == 21
     say "Congradulations #{player1_name}, you hit BlackJack!!"
       if dealer_total == 21
-        say "Unfortunatly, so did the dealer, so you push"
-      else say "You Win!!"
+        say "Unfortunatly, so did the dealer so you push"
+      else say_win
       end
 
   # See if the user would like to double down
@@ -121,8 +144,10 @@ until (play_again.capitalize == "No") do
     until player1_choice == "2"
       player1_cards << deck.pop
       say "Your next card is a #{player1_cards.last}"
+      sleep_time
       player1_total = calculate_total(player1_cards)
-      say "Your Current Total: #{player1_total}"
+      say "YOUR CURRENT TOTAL: #{player1_total}"
+      sleep_time
         if player1_total == "21"
           say "Congradulations, you currently have 21 exactly in your hand"
           say "Let's see what the dealer does!"
@@ -140,32 +165,38 @@ until (play_again.capitalize == "No") do
   # Finish the dealers hand
 
   if busted == "Yes"
-    say "Gamd Over... Better luck next time"
   elsif dealer_total == 21
     say "The dealers HIDDEN card was #{dealer_cards[0]} and he had a #{dealer_cards[1]} on the table"
+    sleep_time
     say "The Dealer hit BLACKJACK!"
-    say "Sorry... You lose!"
+    say_lose
   else
     say "The HIDDEN card in the dealers had is a #{dealer_cards[0]}."
+    sleep_time
     say "The card the dealer had on the table was a #{dealer_cards[1]}."
+    sleep_time
     say "DEALERS CURRENT TOTAL: #{dealer_total}"
       until dealer_total >= 16  do
+        sleep_time
         say "The dealer must take a hit"
+        sleep_time
         say " "
         dealer_cards << deck.pop
         dealer_total = calculate_total(dealer_cards)
         say "The dealer was delta a #{dealer_cards.last}."
+        sleep_time
         say "DEALERS CURRENT TOTAL: #{dealer_total}" 
+        sleep_time
       end
     if dealer_total >= 22
       say "The dealer BUSTER with at total of #{dealer_total}."
-      say "Congradulations #{player1_name.capitalize}... YOU WIN!!"
+      say_win
     else
       say "You have a total of #{player1_total} and the dealer has a total of #{dealer_total}."
       if dealer_total >= player1_total
-        say "Sorry, you lose!"
+        say_lose
       else
-        say "Congradulations #{player1_name.capitalize}... YOU WIN!!"
+        say_win
       end
     end
   end
@@ -185,7 +216,7 @@ until (play_again.capitalize == "No") do
     busted = "No"
     say " "
     say " "
-    say "******** STARTING NEW HAND ********"
+    say_emp "Staring New hand"
   else
   end
   # puts deck

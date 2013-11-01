@@ -2,12 +2,14 @@
 
 def say(msg) 
   puts "-->  #{msg}"
+  sleep(1)
   puts "--> "
 end
 
 def say_emp(msg)
   puts "-->"
   puts "--> ********* #{msg.upcase} *********"
+  sleep(1)
   puts "-->"
 end
 
@@ -23,10 +25,6 @@ end
 def say_lose
   say_emp "You lost!"
   say "Game Over... Better Luck Next Time"
-end
-
-def sleep_time
-  sleep(2)
 end
 
 # Defining Method to Calculate the Total of a Hand
@@ -90,7 +88,6 @@ play_again = "Yes"
 
 until (play_again.capitalize == "No") do
   say_emp "Dealing Cards"
-  sleep_time
   
   # Dealing the cards
 
@@ -102,31 +99,22 @@ until (play_again.capitalize == "No") do
   player1_cards << deck.pop
   dealer_cards << deck.pop
 
-  #puts " "
-  #puts player1_cards.to_s
-  #puts dealer_cards.to_s
-
   # Calculating the Total of the dealers hand and the players hand
 
   player1_total = calculate_total(player1_cards)
   dealer_total = calculate_total(dealer_cards)
 
-  #puts " "
-  #puts "Dealer Total:  #{dealer_total}"
-  #puts " "
-
   # Displaying the cards to the player
 
   say_to_player1(player1_name,"You have been delte the following cards: #{player1_cards[0]} and #{player1_cards[1]}")
   say "YOUR CURRENT TOTAL: #{player1_total}"
-  sleep_time
   say "The dealer has been delt one HIDDEN card and a #{dealer_cards[1]}."
-  sleep_time
 
   # Check to See if the player Hit BlackJack
 
   if player1_total == 21
     say "Congradulations #{player1_name}, you hit BlackJack!!"
+    blackjack = "Yes"
       if dealer_total == 21
         say "Unfortunatly, so did the dealer so you push"
       else say_win
@@ -144,10 +132,8 @@ until (play_again.capitalize == "No") do
     until player1_choice == "2"
       player1_cards << deck.pop
       say "Your next card is a #{player1_cards.last}"
-      sleep_time
       player1_total = calculate_total(player1_cards)
       say "YOUR CURRENT TOTAL: #{player1_total}"
-      sleep_time
         if player1_total == "21"
           say "Congradulations, you currently have 21 exactly in your hand"
           say "Let's see what the dealer does!"
@@ -164,29 +150,22 @@ until (play_again.capitalize == "No") do
 
   # Finish the dealers hand
 
-  if busted == "Yes"
+  if busted == "Yes" || blackjack == "Yes"
   elsif dealer_total == 21
     say "The dealers HIDDEN card was #{dealer_cards[0]} and he had a #{dealer_cards[1]} on the table"
-    sleep_time
     say "The Dealer hit BLACKJACK!"
     say_lose
   else
     say "The HIDDEN card in the dealers had is a #{dealer_cards[0]}."
-    sleep_time
     say "The card the dealer had on the table was a #{dealer_cards[1]}."
-    sleep_time
     say "DEALERS CURRENT TOTAL: #{dealer_total}"
       until dealer_total >= 16  do
-        sleep_time
         say "The dealer must take a hit"
-        sleep_time
         say " "
         dealer_cards << deck.pop
         dealer_total = calculate_total(dealer_cards)
         say "The dealer was delta a #{dealer_cards.last}."
-        sleep_time
         say "DEALERS CURRENT TOTAL: #{dealer_total}" 
-        sleep_time
       end
     if dealer_total >= 22
       say "The dealer BUSTER with at total of #{dealer_total}."
@@ -214,6 +193,7 @@ until (play_again.capitalize == "No") do
 
   if play_again.capitalize == "Yes"
     busted = "No"
+    blackjack = "No"
     say " "
     say " "
     say_emp "Staring New hand"
